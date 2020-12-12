@@ -7,6 +7,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on("connection", socket => {
+  io.emit("test", "Test");
   socket.on("join", data => {
     try {
       console.log(data);
