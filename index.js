@@ -7,11 +7,12 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on("connection", socket => {
-  socket.on("cashierJoin", data => {
+  socket.on("join", data => {
     try {
       console.log(data);
       console.log("Cashier has connected to Socket.io Real Time");
       socket.join(data.roomID);
+      io.emit("join", data);
     } catch (err) {
       console.log(err.message);
       socket.emit("error", { errMessage: err.message });
