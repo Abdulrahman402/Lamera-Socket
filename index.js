@@ -1,10 +1,13 @@
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
+const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+
+app.use(cors())
 
 io.on("connection", socket => {
   io.emit("test", "Test");
@@ -23,9 +26,7 @@ io.on("connection", socket => {
   console.log("hi");
   socket.on("tableOnline", data => {
     console.log(data);
-    socket.broadcast
-      .to("1fe35579-5ce7-46ec-89e0-7e7236700297")
-      .emit("Status", data);
+    io.to("1fe35579-5ce7-46ec-89e0-7e7236700297").emit("tableOnline", data);
   });
 
   socket.on("goOnline", data => {
