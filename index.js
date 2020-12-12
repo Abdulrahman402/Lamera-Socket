@@ -2,12 +2,16 @@ const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
 const cors = require("cors");
+const helmet = require("helmet");
+const compression = require("compression");
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-app.use(cors())
+app.use(cors());
+app.use(helmet());
+app.use(compression());
 
 io.on("connection", socket => {
   io.emit("test", "Test");
