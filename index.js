@@ -1,17 +1,15 @@
-const http = require("http");
 const express = require("express");
-const socketio = require("socket.io");
-const cors = require("cors");
-const helmet = require("helmet");
-const compression = require("compression");
-
 const app = express();
-const server = http.createServer(app);
-const io = socketio(server);
+/*@ here we include express-framework @*/
 
+/*@ here we include express-framework @*/
+const cors = require("cors");
 app.use(cors());
-app.use(helmet());
-app.use(compression());
+/*@ here we include express-framework @*/
+
+/*@ here we include Socket.io @*/
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
 
 io.on("connection", socket => {
   io.emit("test", "Test");
@@ -63,6 +61,6 @@ io.on("connection", socket => {
 });
 
 const port = process.env.PORT || 2000;
-server.listen(port, () => {
+http.listen(port, () => {
   console.log(`Running on Port: ${port}`);
 });
